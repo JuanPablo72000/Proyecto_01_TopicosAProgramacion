@@ -1,0 +1,63 @@
+/* 1. Fondo de la aplicación (el StackPane) */
+.root-pane {
+    -fx-background-color: #D32F2F; /* El rojo característico */
+}
+
+/* 2. La tarjeta blanca (el VBox) */
+.login-card {
+    -fx-background-color: white;
+    -fx-background-radius: 15; /* Esquinas redondeadas */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 8); /* Sombra suave */
+}
+
+/* 3. Estilo para el título "Login" */
+.login-title {
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #333333;
+}
+
+/* 4. Campos de texto (Inputs con solo la línea de abajo) */
+.text-input {
+    -fx-background-color: transparent; /* Quita la caja gris de fondo */
+    -fx-border-color: transparent transparent #D3D3D3 transparent; /* Color: Arriba Der Abajo Izq. Solo gris abajo */
+    -fx-border-width: 0 0 1 0; /* Grosor: Solo 1 pixel abajo */
+    -fx-padding: 5 5 5 0; /* Un poco de aire para el texto */
+    -fx-text-fill: #333333; /* Color del texto al escribir */
+    -fx-font-size: 14px;
+    -fx-prompt-text-fill: #999999; /* Un gris clarito */
+}
+
+.text-input:focused {
+    -fx-border-color: transparent transparent #D32F2F transparent;
+    -fx-border-width: 0 0 2 0;
+}
+
+/* 5. El Botón con degradado */
+.login-button {
+    -fx-background-color: linear-gradient(to right, #D32F2F, #FF5252);
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 18px; /* <--- Asegúrate de que esté aquí */
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 10 30 10 30;
+}
+
+.login-button:hover {
+    -fx-background-color: linear-gradient(to right, #B71C1C, #D32F2F);
+    -fx-font-size: 18px; /* <--- Lo repetimos aquí para "amarrar" el tamaño */
+}
+
+/* 6. El link de "Forgot password" */
+.hyperlink {
+    -fx-text-fill: #666666;
+    -fx-font-size: 12px;
+    -fx-underline: false;
+    -fx-border-color: transparent;
+}
+
+.hyperlink:hover {
+    -fx-text-fill: #D32F2F;
+}
