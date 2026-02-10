@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<StackPane styleClass="root-pane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane styleClass="root-pane" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyecto_01_topicosaprogramacion.LoginController">
    <children>
       <VBox alignment="CENTER" maxHeight="450.0" maxWidth="380.0" minHeight="400.0" minWidth="300.0" spacing="25.0" styleClass="login-card" stylesheets="@styles.css">
          <children>

@@ -1,6 +1,6 @@
 /* 1. Fondo de la aplicación (el StackPane) */
 .root-pane {
-    -fx-background-color: #D32F2F; /* El rojo característico */
+    -fx-background-color: #E6F0FA; /* El rojo característico */
 }
 
 /* 2. La tarjeta blanca (el VBox) */
@@ -30,34 +30,151 @@
 }
 
 .text-input:focused {
-    -fx-border-color: transparent transparent #D32F2F transparent;
+    -fx-border-color: transparent transparent #654597 transparent;
     -fx-border-width: 0 0 2 0;
 }
 
 /* 5. El Botón con degradado */
 .login-button {
-    -fx-background-color: linear-gradient(to right, #D32F2F, #FF5252);
+    /* Fondo con tu color Bright Lavender (#AB81CD) */
+    -fx-background-color: #AB81CD;
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-font-size: 18px; /* <--- Asegúrate de que esté aquí */
+    -fx-font-size: 18px; /* <--- Asegurado */
     -fx-background-radius: 5;
     -fx-cursor: hand;
     -fx-padding: 10 30 10 30;
+    -fx-transition: 0.3s; /* Opcional: para que el cambio de color sea suave */
 }
 
 .login-button:hover {
-    -fx-background-color: linear-gradient(to right, #B71C1C, #D32F2F);
+    /* Cambio al color Dusty Grape (#654597) al pasar el mouse */
+    -fx-background-color: #654597;
     -fx-font-size: 18px; /* <--- Lo repetimos aquí para "amarrar" el tamaño */
 }
 
-/* 6. El link de "Forgot password" */
-.hyperlink {
-    -fx-text-fill: #666666;
-    -fx-font-size: 12px;
-    -fx-underline: false;
-    -fx-border-color: transparent;
+/* Aca es la interfaz del email
+
+/* 7. Barra Superior (Header) */
+.header-background {
+    -fx-background-color: #222A68; /* Imperial Blue */
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 2);
 }
 
-.hyperlink:hover {
-    -fx-text-fill: #D32F2F;
+.header-title {
+    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-weight: bold;
+    -fx-font-size: 24px;
+}
+
+/* 8. Campos de Formulario (Estilo "Caja" distinto al del Login) */
+/* Aplica esta clase a tus TextField del correo y al TextArea */
+.email-field {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-border-color: #AB81CD; /* Bright Lavender (Borde suave) */
+    -fx-border-radius: 5;
+    -fx-border-width: 1px;
+    -fx-padding: 5;
+    -fx-font-size: 14px;
+}
+
+.email-field:focused {
+    -fx-border-color: #574AE2; /* Majorelle Blue (Resalta al escribir) */
+    -fx-border-width: 2px;
+    -fx-background-color: #FDFDFD;
+}
+
+/* 9. Etiquetas del formulario (Labels: De, Para, Asunto) */
+.form-label {
+    -fx-text-fill: #222A68; /* Imperial Blue */
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+/* 10. Zona de Arrastrar Archivos (Drag & Drop) */
+.drop-zone {
+    -fx-background-color: rgba(226, 173, 242, 0.15); /* Mauve muy transparente */
+    -fx-border-color: #654597; /* Dusty Grape */
+    -fx-border-style: dashed;
+    -fx-border-width: 2;
+    -fx-border-radius: 10;
+    -fx-background-radius: 10;
+    -fx-cursor: hand;
+}
+
+/* Efecto visual cuando pasas el mouse por la zona de drop */
+.drop-zone:hover {
+    -fx-background-color: rgba(226, 173, 242, 0.3);
+    -fx-border-color: #574AE2; /* Cambia a Majorelle Blue */
+}
+
+.drop-label {
+    -fx-text-fill: #654597; /* Dusty Grape */
+    -fx-font-weight: bold;
+}
+
+/* 11. Lista de Archivos Adjuntos (ListView) */
+.attachment-list {
+    -fx-background-color: white;
+    -fx-border-color: #AB81CD;
+    -fx-border-radius: 3;
+}
+.attachment-list .list-cell {
+    -fx-text-fill: #333333;
+    -fx-background-color: transparent;
+}
+.attachment-list .list-cell:filled:selected {
+    -fx-background-color: #E2ADF2; /* Mauve al seleccionar un archivo */
+}
+
+/* 12. Botón de Enviar (Reutilizando estilo pero con nombre específico) */
+.send-button {
+    -fx-background-color: #574AE2; /* Majorelle Blue (Más fuerte que el login) */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 16px;
+    -fx-background-radius: 5;
+    -fx-cursor: hand;
+    -fx-padding: 8 25 8 25;
+}
+
+.send-button:hover {
+    -fx-background-color: #AB81CD; /* Bright Lavender */
+}
+
+/* Estilo del contenedor de la lista */
+.attachment-list {
+    -fx-background-color: white;
+    -fx-background-radius: 5;
+    -fx-border-color: #AB81CD; /* Bright Lavender */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5;
+}
+
+/* Quita el color gris feo por defecto cuando la lista está vacía o inactiva */
+.attachment-list .viewport {
+    -fx-background-color: transparent;
+}
+
+/* Estilo de CADA FILA (celda) de la lista */
+.attachment-list .list-cell {
+    -fx-text-fill: #333333; /* Color de letra normal */
+    -fx-background-color: transparent;
+    -fx-padding: 5 10 5 10; /* Un poco de aire */
+    -fx-font-size: 13px;
+}
+
+/* Cuando pasas el mouse por encima de un archivo (Hover) */
+.attachment-list .list-cell:filled:hover {
+    -fx-background-color: #F3E5F5; /* Un morado muy muy clarito */
+    -fx-cursor: hand;
+}
+
+/* Cuando seleccionas un archivo (Click) */
+.attachment-list .list-cell:filled:selected {
+    -fx-background-color: #E2ADF2; /* Mauve */
+    -fx-text-fill: #222A68; /* Imperial Blue (para buen contraste) */
+    -fx-font-weight: bold;
 }

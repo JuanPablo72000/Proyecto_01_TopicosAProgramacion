@@ -1,14 +1,67 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="org.example.proyecto_01_topicosaprogramacion.EmailController"
-            prefHeight="400.0" prefWidth="600.0">
-
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyecto_01_topicosaprogramacion.EmailController">
+   <children>
+      <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <HBox alignment="CENTER_LEFT" maxHeight="100.0" minHeight="60.0" prefHeight="80.0" prefWidth="200.0" styleClass="header-background" stylesheets="@styles.css">
+               <padding>
+                  <Insets left="20.0" />
+               </padding>
+               <children>
+                  <Label styleClass="header-title" stylesheets="@styles.css" text="Nuevo Mensaje" />
+               </children>
+            </HBox>
+            <GridPane hgap="15.0" vgap="15.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="150.0" minWidth="-Infinity" prefWidth="120.0" />
+                <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <VBox.margin>
+                  <Insets bottom="20.0" left="40.0" right="40.0" top="20.0" />
+               </VBox.margin>
+               <children>
+                  <Label styleClass="form-label" stylesheets="@styles.css" text="Remitente:" />
+                  <Label styleClass="form-label" stylesheets="@styles.css" text="Destinatario:" GridPane.rowIndex="1" />
+                  <Label styleClass="form-label" stylesheets="@styles.css" text="Asunto:" GridPane.rowIndex="2" />
+                  <TextField prefHeight="35.0" styleClass="email-field" stylesheets="@styles.css" GridPane.columnIndex="1" />
+                  <TextField prefHeight="35.0" styleClass="email-field" stylesheets="@styles.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField prefHeight="35.0" styleClass="email-field" stylesheets="@styles.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+            <TextArea prefHeight="200.0" prefWidth="200.0" styleClass="email-field" stylesheets="@styles.css" VBox.vgrow="ALWAYS">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" />
+               </VBox.margin></TextArea>
+            <StackPane minHeight="80.0" prefHeight="150.0" prefWidth="200.0" styleClass="drop-zone" stylesheets="@styles.css">
+               <children>
+                  <Label styleClass="drop-label" stylesheets="@styles.css" text="Arrastra tus archivos aqui" />
+               </children>
+               <VBox.margin>
+                  <Insets left="10.0" right="10.0" top="15.0" />
+               </VBox.margin></StackPane>
+            <ListView prefHeight="100.0" prefWidth="200.0" styleClass="attachment-list" stylesheets="@styles.css">
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="15.0" />
+               </VBox.margin></ListView>
+            <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="15.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="45.0" prefWidth="150.0" styleClass="send-button" stylesheets="@styles.css" text="Enviar" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
 </AnchorPane>
