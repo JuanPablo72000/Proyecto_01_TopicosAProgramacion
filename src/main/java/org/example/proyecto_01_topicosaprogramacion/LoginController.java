@@ -13,6 +13,9 @@ import javax.mail.Store;
 import java.io.IOException;
 import java.util.Properties;
 
+import javafx.event.ActionEvent;
+import javafx.scene.Node;
+
 public class LoginController {
     // --- CONTROLES VINCULADOS AL FXML ---
     @FXML
@@ -96,25 +99,37 @@ public class LoginController {
     // --- CAMBIO DE PANTALLA ---
     private void cambiarPantallaPrincipal() {
         try {
-            // AQUÍ ESTÁ EL CAMBIO: Cargamos "email.fxml"
+            // 1. Cargamos el FXML
+            // OJO: Asegúrate de que el nombre coincida con tu archivo real (email-view.fxml o email.fxml)
             FXMLLoader loader = new FXMLLoader(getClass().getResource("email.fxml"));
             Parent root = loader.load();
 
-            // Obtener la ventana actual
+            // -----------------------------------------------------------------
+            // 2. LA MAGIA: Obtener el controlador de Email e inyectar los datos
+            // -----------------------------------------------------------------
+            EmailController emailController = loader.getController();
+
+            // Sacamos los datos que guardaste en tu clase SesionUsuario
+            String correo = SesionUsuario.getCorreo();
+            String password = SesionUsuario.getPassword();
+
+            // Le pasamos la estafeta al EmailController
+            emailController.setCredenciales(correo, password);
+            // -----------------------------------------------------------------
+
+            // 3. Mostrar la ventana en la misma pantalla
             Stage stage = (Stage) buttonLogin.getScene().getWindow();
+            Scene scene = new Scene(root, 650, 750);
 
-            Scene scene = new Scene(root);
-            // Opcional: Cargar estilos si los necesitas en la nueva ventana
-            // scene.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
-
+            // Obtener la ventana actual
             stage.setScene(scene);
-            stage.setTitle("Bandeja de Entrada - " + SesionUsuario.getCorreo());
+            stage.setTitle("Nuevo Mensaje - " + correo);
             stage.centerOnScreen();
+            stage.setMaximized(true);
             stage.show();
-
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            mostrarAlerta("Error crítico", "No se encontró el archivo 'email.fxml'.\nAsegúrate de que esté en la carpeta resources junto con tus clases.");
+            mostrarAlerta("Error crítico", "No se encontró el archivo FXML.\nAsegúrate de que el nombre sea correcto.");
             buttonLogin.setDisable(false); // Reactivar botón por si acaso
         }
     }

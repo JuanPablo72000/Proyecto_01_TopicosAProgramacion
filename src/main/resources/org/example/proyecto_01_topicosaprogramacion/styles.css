@@ -53,7 +53,11 @@
     -fx-font-size: 18px; /* <--- Lo repetimos aquí para "amarrar" el tamaño */
 }
 
-/* Aca es la interfaz del email
+/* Aca es la interfaz del email */
+
+.email-background {
+    -fx-background-color: #AB81CD; /* El rojo característico */
+}
 
 /* 7. Barra Superior (Header) */
 .header-background {
