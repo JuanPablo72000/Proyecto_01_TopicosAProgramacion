@@ -1,4 +1,6 @@
-/* 1. Fondo de la aplicación (el StackPane) */
+/* Empieza el diseño del login
+
+/* 1. Fondo del login */
 .root-pane {
     -fx-background-color: #E6F0FA; /* El rojo característico */
 }
@@ -10,7 +12,7 @@
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 15, 0, 0, 8); /* Sombra suave */
 }
 
-/* 3. Estilo para el título "Login" */
+/* 3. Estilo para el título login */
 .login-title {
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 28px;
@@ -20,13 +22,13 @@
 
 /* 4. Campos de texto (Inputs con solo la línea de abajo) */
 .text-input {
-    -fx-background-color: transparent; /* Quita la caja gris de fondo */
-    -fx-border-color: transparent transparent #D3D3D3 transparent; /* Color: Arriba Der Abajo Izq. Solo gris abajo */
-    -fx-border-width: 0 0 1 0; /* Grosor: Solo 1 pixel abajo */
-    -fx-padding: 5 5 5 0; /* Un poco de aire para el texto */
-    -fx-text-fill: #333333; /* Color del texto al escribir */
+    -fx-background-color: transparent;
+    -fx-border-color: transparent transparent #D3D3D3 transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-padding: 5 5 5 0;
+    -fx-text-fill: #333333;
     -fx-font-size: 14px;
-    -fx-prompt-text-fill: #999999; /* Un gris clarito */
+    -fx-prompt-text-fill: #999999;
 }
 
 .text-input:focused {
@@ -36,32 +38,31 @@
 
 /* 5. El Botón con degradado */
 .login-button {
-    /* Fondo con tu color Bright Lavender (#AB81CD) */
     -fx-background-color: #AB81CD;
     -fx-text-fill: white;
     -fx-font-weight: bold;
-    -fx-font-size: 18px; /* <--- Asegurado */
+    -fx-font-size: 18px;
     -fx-background-radius: 5;
     -fx-cursor: hand;
     -fx-padding: 10 30 10 30;
-    -fx-transition: 0.3s; /* Opcional: para que el cambio de color sea suave */
+    -fx-transition: 0.3s;
 }
 
 .login-button:hover {
-    /* Cambio al color Dusty Grape (#654597) al pasar el mouse */
     -fx-background-color: #654597;
-    -fx-font-size: 18px; /* <--- Lo repetimos aquí para "amarrar" el tamaño */
+    -fx-font-size: 18px;
 }
 
-/* Aca es la interfaz del email */
+/* Aqui empieza el diseño del Email */
 
+/* 7. Fondo del Email */
 .email-background {
-    -fx-background-color: #AB81CD; /* El rojo característico */
+    -fx-background-color: #AB81CD;
 }
 
-/* 7. Barra Superior (Header) */
+/* 8. Barra Superior (Header) */
 .header-background {
-    -fx-background-color: #222A68; /* Imperial Blue */
+    -fx-background-color: #222A68;
     -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.3), 10, 0, 0, 2);
 }
 
@@ -72,12 +73,11 @@
     -fx-font-size: 24px;
 }
 
-/* 8. Campos de Formulario (Estilo "Caja" distinto al del Login) */
-/* Aplica esta clase a tus TextField del correo y al TextArea */
+/* 8. Campos de Formulario */
 .email-field {
     -fx-background-color: white;
     -fx-background-radius: 5;
-    -fx-border-color: #AB81CD; /* Bright Lavender (Borde suave) */
+    -fx-border-color: #AB81CD;
     -fx-border-radius: 5;
     -fx-border-width: 1px;
     -fx-padding: 5;
@@ -85,22 +85,22 @@
 }
 
 .email-field:focused {
-    -fx-border-color: #574AE2; /* Majorelle Blue (Resalta al escribir) */
+    -fx-border-color: #574AE2;
     -fx-border-width: 2px;
     -fx-background-color: #FDFDFD;
 }
 
 /* 9. Etiquetas del formulario (Labels: De, Para, Asunto) */
 .form-label {
-    -fx-text-fill: #222A68; /* Imperial Blue */
+    -fx-text-fill: #222A68;
     -fx-font-weight: bold;
     -fx-font-size: 14px;
 }
 
 /* 10. Zona de Arrastrar Archivos (Drag & Drop) */
 .drop-zone {
-    -fx-background-color: rgba(226, 173, 242, 0.15); /* Mauve muy transparente */
-    -fx-border-color: #654597; /* Dusty Grape */
+    -fx-background-color: rgba(226, 173, 242, 0.15);
+    -fx-border-color: #654597;
     -fx-border-style: dashed;
     -fx-border-width: 2;
     -fx-border-radius: 10;
@@ -108,14 +108,13 @@
     -fx-cursor: hand;
 }
 
-/* Efecto visual cuando pasas el mouse por la zona de drop */
 .drop-zone:hover {
     -fx-background-color: rgba(226, 173, 242, 0.3);
-    -fx-border-color: #574AE2; /* Cambia a Majorelle Blue */
+    -fx-border-color: #574AE2;
 }
 
 .drop-label {
-    -fx-text-fill: #654597; /* Dusty Grape */
+    -fx-text-fill: #654597;
     -fx-font-weight: bold;
 }
 
@@ -130,12 +129,12 @@
     -fx-background-color: transparent;
 }
 .attachment-list .list-cell:filled:selected {
-    -fx-background-color: #E2ADF2; /* Mauve al seleccionar un archivo */
+    -fx-background-color: #E2ADF2;
 }
 
-/* 12. Botón de Enviar (Reutilizando estilo pero con nombre específico) */
+/* 12. Botón de Enviar */
 .send-button {
-    -fx-background-color: #574AE2; /* Majorelle Blue (Más fuerte que el login) */
+    -fx-background-color: #574AE2;
     -fx-text-fill: white;
     -fx-font-weight: bold;
     -fx-font-size: 16px;
@@ -148,37 +147,33 @@
     -fx-background-color: #AB81CD; /* Bright Lavender */
 }
 
-/* Estilo del contenedor de la lista */
+/* 13. Estilo del contenedor de la lista */
 .attachment-list {
     -fx-background-color: white;
     -fx-background-radius: 5;
-    -fx-border-color: #AB81CD; /* Bright Lavender */
+    -fx-border-color: #AB81CD;
     -fx-border-width: 1px;
     -fx-border-radius: 5;
 }
 
-/* Quita el color gris feo por defecto cuando la lista está vacía o inactiva */
 .attachment-list .viewport {
     -fx-background-color: transparent;
 }
 
-/* Estilo de CADA FILA (celda) de la lista */
 .attachment-list .list-cell {
-    -fx-text-fill: #333333; /* Color de letra normal */
+    -fx-text-fill: #333333;
     -fx-background-color: transparent;
-    -fx-padding: 5 10 5 10; /* Un poco de aire */
+    -fx-padding: 5 10 5 10;
     -fx-font-size: 13px;
 }
 
-/* Cuando pasas el mouse por encima de un archivo (Hover) */
 .attachment-list .list-cell:filled:hover {
-    -fx-background-color: #F3E5F5; /* Un morado muy muy clarito */
+    -fx-background-color: #F3E5F5;
     -fx-cursor: hand;
 }
 
-/* Cuando seleccionas un archivo (Click) */
 .attachment-list .list-cell:filled:selected {
-    -fx-background-color: #E2ADF2; /* Mauve */
-    -fx-text-fill: #222A68; /* Imperial Blue (para buen contraste) */
+    -fx-background-color: #E2ADF2;
+    -fx-text-fill: #222A68;
     -fx-font-weight: bold;
 }

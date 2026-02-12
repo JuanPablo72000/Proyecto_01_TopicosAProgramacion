@@ -20,69 +20,83 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
+import javafx.application.Platform;
 
 public class EmailController {
-    // --- 1. Definición de componentes con tus nuevos IDs ---
-    @FXML private TextField labelRemitente;     // Antes txtRemitente
-    @FXML private TextField labelDestinatario;  // Antes txtDestinatario
-    @FXML private TextField labelAsunto;        // Antes txtAsunto
-    @FXML private TextArea textMensaje;         // Antes txtCuerpo
-    @FXML private StackPane paneArrastrar;      // Antes dropZone
-    @FXML private ListView<File> listAdjuntos;  // Antes listaAdjuntos
-    @FXML private Button botonEnviar;           // Antes btnEnviar
+    @FXML private TextField labelRemitente;
+    @FXML private TextField labelDestinatario;
+    @FXML private TextField labelAsunto;
+    @FXML private TextArea textMensaje;
+    @FXML private StackPane paneArrastrar;
+    @FXML private ListView<File> listAdjuntos;
+    @FXML private Button botonEnviar;
+    @FXML private Button botonEliminar;
 
-    // --- 2. Variables de lógica ---
+    // 2. Variables de lógica
     private ObservableList<File> archivosObservable = FXCollections.observableArrayList();
-    private String passwordUsuario; // Aquí guardaremos la contraseña que viene del Login
+    private String passwordUsuario;
+    private static final long MAX_FILE_SIZE = 25 * 1024 * 1024;
 
-    // Extensiones permitidas (normalizadas en minúsculas)
+    // Extensiones permitidas
     private final List<String> extensionesValidas = Arrays.asList(
             "txt", "jav", "java", "doc", "docx", "jpg", "jpeg", "mp4", "flv", "zip", "rar"
     );
 
-    // --- 3. Método para recibir credenciales desde la ventana anterior ---
+    // 3. Metodo para recibir credenciales desde la ventana anterior
     public void setCredenciales(String correo, String password) {
         this.passwordUsuario = password;
         this.labelRemitente.setText(correo);
-        this.labelRemitente.setEditable(false); // Bloqueamos para que no cambien el remitente
+        this.labelRemitente.setEditable(false);
     }
 
-    // --- 4. Initialize: Configuración inicial ---
+    // 4. Initialize: Configuración inicial
     @FXML
     public void initialize() {
-        // Vincular la lista visual con los datos
         listAdjuntos.setItems(archivosObservable);
-
-        // Configurar el evento del botón enviar
         botonEnviar.setOnAction(event -> enviarCorreo());
 
-        // Configurar la zona de arrastrar y soltar
         configurarDragAndDrop();
-
         configurarClickArchivos();
-    }
 
-    // --- 5. Lógica de Drag & Drop (Arrastrar y Soltar) ---
-    private void configurarDragAndDrop() {
-        // Evento: Cuando arrastras algo sobre el StackPane
-        paneArrastrar.setOnDragOver(event -> {
-            if (event.getGestureSource() != paneArrastrar && event.getDragboard().hasFiles()) {
-                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+        botonEliminar.setOnAction(event -> {
+            File archivoSeleccionado = listAdjuntos.getSelectionModel().getSelectedItem();
+
+            if (archivoSeleccionado != null) {
+                archivosObservable.remove(archivoSeleccionado);
+            } else {
+                mostrarAlerta("Aviso", "Primero selecciona un archivo de la lista para eliminarlo.", Alert.AlertType.INFORMATION);
             }
-            event.consume();
         });
 
-        // Evento: Cuando sueltas los archivos
+        Platform.runLater(() -> {
+            Stage stage = (Stage) paneArrastrar.getScene().getWindow();
+
+            stage.setMinWidth(620);
+            stage.setMinHeight(750);
+
+            stage.sizeToScene();
+        });
+    }
+
+    // 5. Lógica de Drag & Drop (Arrastrar y Soltar)
+    private void configurarDragAndDrop() {
         paneArrastrar.setOnDragDropped(event -> {
             Dragboard db = event.getDragboard();
             boolean exito = false;
 
             if (db.hasFiles()) {
                 for (File archivo : db.getFiles()) {
+                    // Validar peso acumulado
+                    long pesoActual = calcularPesoTotalActual();
+                    if (pesoActual + archivo.length() > MAX_FILE_SIZE) {
+                        mostrarAlerta("Límite excedido",
+                                "El archivo '" + archivo.getName() + "' haría que superes los 30MB totales.",
+                                Alert.AlertType.WARNING);
+                        continue;
+                    }
+
                     if (esExtensionValida(archivo.getName()) && !archivosObservable.contains(archivo)) {
                         archivosObservable.add(archivo);
-                    } else {
-                        System.out.println("Archivo rechazado o duplicado: " + archivo.getName());
                     }
                 }
                 exito = true;
@@ -90,9 +104,16 @@ public class EmailController {
             event.setDropCompleted(exito);
             event.consume();
         });
+
+        paneArrastrar.setOnDragOver(event -> {
+            if (event.getGestureSource() != paneArrastrar && event.getDragboard().hasFiles()) {
+                event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+            }
+            event.consume();
+        });
     }
 
-    // --- Lógica para abrir explorador de archivos al hacer clic ---
+    // Logica para abrir explorador de archivos al hacer clic
     private void configurarClickArchivos() {
         paneArrastrar.setOnMouseClicked(event -> {
             FileChooser fileChooser = new FileChooser();
@@ -100,25 +121,29 @@ public class EmailController {
 
             // Filtros para que el explorador de Windows solo muestre tus extensiones válidas
             fileChooser.getExtensionFilters().addAll(
-                    new FileChooser.ExtensionFilter("Todos los permitidos", "*.txt", "*.jav", "*.java", "*.doc", "*.docx", "*.jpg", "*.jpeg", "*.mp4", "*.flv", "*.zip", "*.rar"),
-                    new FileChooser.ExtensionFilter("Documentos (*.txt, *.doc, *.docx)", "*.txt", "*.doc", "*.docx"),
+                    new FileChooser.ExtensionFilter("Todos los permitidos", "*.txt", "*.jav", "*.java", "*.doc", "*.docx", "*.jpg", "*.jpeg", "*.mp4", "*.flv", "*.zip", "*.rar", "*.pdf"),
+                    new FileChooser.ExtensionFilter("Documentos (*.txt, *.doc, *.docx)", "*.txt", "*.doc", "*.docx", "*.pdf"),
                     new FileChooser.ExtensionFilter("Código Java (*.java, *.jav)", "*.java", "*.jav"),
                     new FileChooser.ExtensionFilter("Imágenes (*.jpg, *.jpeg)", "*.jpg", "*.jpeg"),
                     new FileChooser.ExtensionFilter("Videos (*.mp4, *.flv)", "*.mp4", "*.flv"),
                     new FileChooser.ExtensionFilter("Comprimidos (*.zip, *.rar)", "*.zip", "*.rar")
             );
 
-            // Obtener la ventana actual para mostrar el diálogo
+            // Obtener la ventana actual para mostrar el dialogo
             Stage stage = (Stage) paneArrastrar.getScene().getWindow();
 
-            // Abrir el explorador permitiendo selección múltiple
+            // Abrir el explorador permitiendo selección multiple
             List<File> archivosSeleccionados = fileChooser.showOpenMultipleDialog(stage);
 
-            // Si el usuario seleccionó archivos (y no le dio a "Cancelar")
             if (archivosSeleccionados != null) {
                 for (File archivo : archivosSeleccionados) {
-                    // Evitar duplicados en la lista visual
-                    if (!archivosObservable.contains(archivo)) {
+                    long pesoAcumulado = calcularPesoTotalActual();
+
+                    if (pesoAcumulado + archivo.length() > MAX_FILE_SIZE) {
+                        mostrarAlerta("Límite de tamaño",
+                                "No se puede agregar '" + archivo.getName() + "' porque excede el límite total de 30MB.",
+                                Alert.AlertType.WARNING);
+                    } else if (!archivosObservable.contains(archivo)) {
                         archivosObservable.add(archivo);
                     }
                 }
@@ -126,7 +151,7 @@ public class EmailController {
         });
     }
 
-    // Método auxiliar para validar extensiones
+    // Metodo auxiliar para validar extensiones
     private boolean esExtensionValida(String nombreArchivo) {
         String nombre = nombreArchivo.toLowerCase();
         int ultimoPunto = nombre.lastIndexOf('.');
@@ -137,9 +162,8 @@ public class EmailController {
         return false;
     }
 
-    // --- 6. Lógica de Envío de Correo (En segundo plano) ---
+    // 6. Logica de Envío de Correo
     private void enviarCorreo() {
-        // Recolección de datos
         String remitente = labelRemitente.getText();
         String destinatario = labelDestinatario.getText();
         String asunto = labelAsunto.getText();
@@ -150,11 +174,20 @@ public class EmailController {
             return;
         }
 
-        // Interfaz visual de "Cargando"
+        if (destinatario.isEmpty() || passwordUsuario == null) {
+            mostrarAlerta("Error", "Faltan datos o no se ha iniciado sesión correctamente.", Alert.AlertType.ERROR);
+            return;
+        }
+
+        // NUEVO: Validación final de seguridad
+        if (calcularPesoTotalActual() > MAX_FILE_SIZE) {
+            mostrarAlerta("Error de envío", "El total de los archivos adjuntos supera los 30MB permitidos.", Alert.AlertType.ERROR);
+            return;
+        }
+
         botonEnviar.setDisable(true);
         botonEnviar.setText("Enviando...");
 
-        // Tarea en segundo plano para no congelar la interfaz
         Task<Void> tareaEnvio = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -163,7 +196,6 @@ public class EmailController {
             }
         };
 
-        // Si sale bien
         tareaEnvio.setOnSucceeded(e -> {
             mostrarAlerta("Éxito", "Correo enviado correctamente.", Alert.AlertType.INFORMATION);
             botonEnviar.setDisable(false);
@@ -171,7 +203,6 @@ public class EmailController {
             limpiarFormulario();
         });
 
-        // Si falla
         tareaEnvio.setOnFailed(e -> {
             Throwable error = tareaEnvio.getException();
             mostrarAlerta("Error al enviar", error.getMessage(), Alert.AlertType.ERROR);
@@ -183,12 +214,12 @@ public class EmailController {
         new Thread(tareaEnvio).start();
     }
 
-    // Lógica pura de JavaMail
+    // Logica pura de JavaMail
     private void enviarEmailTecnico(String remitente, String password, String destinatario, String asunto, String cuerpo) throws Exception {
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
-        props.put("mail.smtp.host", "smtp.gmail.com"); // Cambia esto si usas Outlook/Hotmail
+        props.put("mail.smtp.host", "smtp.gmail.com"); // Cambiar esto si usas Outlook/Hotmail
         props.put("mail.smtp.port", "587");
 
         Session session = Session.getInstance(props, new Authenticator() {
@@ -203,16 +234,13 @@ public class EmailController {
         message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(destinatario));
         message.setSubject(asunto);
 
-        // Parte 1: Texto
         BodyPart messageBodyPart = new MimeBodyPart();
         messageBodyPart.setText(cuerpo);
 
         Multipart multipart = new MimeMultipart();
         multipart.addBodyPart(messageBodyPart);
 
-        // Parte 2: Adjuntos
         for (File archivo : archivosObservable) {
-            // Declaramos explícitamente un MimeBodyPart para el adjunto
             MimeBodyPart parteAdjunto = new MimeBodyPart();
             parteAdjunto.attachFile(archivo);
             multipart.addBodyPart(parteAdjunto);
@@ -235,5 +263,11 @@ public class EmailController {
         alert.setHeaderText(null);
         alert.setContentText(contenido);
         alert.showAndWait();
+    }
+
+    private long calcularPesoTotalActual() {
+        return archivosObservable.stream()
+                .mapToLong(File::length)
+                .sum();
     }
 }

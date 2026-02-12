@@ -21,7 +21,7 @@ public class SesionUsuario {
         SesionUsuario.password = password;
     }
 
-    // Método para borrar datos al salir
+    // Metodo para borrar datos al salir
     public static void cerrarSesion() {
         correo = null;
         password = null;

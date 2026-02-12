@@ -36,11 +36,11 @@
                         <Label styleClass="form-label" stylesheets="@styles.css" text="Destinatario:" GridPane.rowIndex="1" />
                         <Label styleClass="form-label" stylesheets="@styles.css" text="Asunto:" GridPane.rowIndex="2" />
                         <TextField fx:id="labelRemitente" prefHeight="35.0" styleClass="email-field" stylesheets="@styles.css" GridPane.columnIndex="1" />
-                        <TextField fx:id="labelDestinatario" prefHeight="35.0" styleClass="email-field" stylesheets="@styles.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                        <TextField fx:id="labelAsunto" prefHeight="35.0" styleClass="email-field" stylesheets="@styles.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="labelDestinatario" prefHeight="35.0" promptText="Escriba a quien desea enviar el correo" styleClass="email-field" stylesheets="@styles.css" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                        <TextField fx:id="labelAsunto" prefHeight="35.0" promptText="Escriba el motivo del correo" styleClass="email-field" stylesheets="@styles.css" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                      </children>
                   </GridPane>
-                  <TextArea fx:id="textMensaje" prefHeight="200.0" prefWidth="200.0" styleClass="email-field" stylesheets="@styles.css" VBox.vgrow="ALWAYS">
+                  <TextArea fx:id="textMensaje" prefHeight="200.0" prefWidth="200.0" promptText="Escribe aqui tu mensaje" styleClass="email-field" stylesheets="@styles.css" VBox.vgrow="ALWAYS">
                      <VBox.margin>
                         <Insets left="20.0" right="20.0" />
                      </VBox.margin>
@@ -63,6 +63,7 @@
                         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                      </padding>
                      <children>
+                        <Button fx:id="botonEliminar" mnemonicParsing="false" prefHeight="45.0" prefWidth="150.0" styleClass="send-button" stylesheets="@styles.css" text="Eliminar" />
                         <Button fx:id="botonEnviar" mnemonicParsing="false" prefHeight="45.0" prefWidth="150.0" styleClass="send-button" stylesheets="@styles.css" text="Enviar" />
                      </children>
                   </HBox>

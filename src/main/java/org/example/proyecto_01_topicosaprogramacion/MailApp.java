@@ -13,7 +13,7 @@ public class MailApp extends Application {
         FXMLLoader fxmlLoader = new FXMLLoader(MailApp.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
         stage.setMaximized(true);
-        stage.setTitle("Hello!");
+        stage.setTitle("Login");
         stage.setScene(scene);
         stage.show();
     }

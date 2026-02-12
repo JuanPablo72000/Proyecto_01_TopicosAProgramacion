@@ -10,7 +10,7 @@
    <children>
       <VBox alignment="CENTER" maxHeight="450.0" maxWidth="380.0" minHeight="400.0" minWidth="300.0" spacing="25.0" styleClass="login-card" stylesheets="@styles.css">
          <children>
-            <Label alignment="CENTER" styleClass="login-title" stylesheets="@styles.css" text="Login">
+            <Label alignment="CENTER" styleClass="login-title" stylesheets="@styles.css" text="Iniciar Sesión">
                <font>
                   <Font size="50.0" />
                </font>
@@ -36,7 +36,7 @@
                <padding>
                   <Insets top="30.0" />
                </padding></HBox>
-            <HBox layoutX="10.0" layoutY="44.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0">
+            <HBox layoutX="10.0" layoutY="44.0" prefHeight="60.0" prefWidth="308.0" spacing="10.0">
                <children>
                   <ImageView fitHeight="36.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true">
                      <image>
