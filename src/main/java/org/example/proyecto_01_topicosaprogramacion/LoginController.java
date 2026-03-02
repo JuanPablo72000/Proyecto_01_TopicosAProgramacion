@@ -1,6 +1,7 @@
 package org.example.proyecto_01_topicosaprogramacion;
 
 import javafx.application.Platform;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -25,11 +26,14 @@ public class LoginController {
     private PasswordField passUser;
     @FXML
     private Button buttonLogin;
+    @FXML
+    private Hyperlink hyperLinkDocumentos;
 
     @FXML
     public void initialize() throws URISyntaxException, IOException {
         buttonLogin.setOnAction(event -> procesarLogin());
         passUser.setOnAction(event -> procesarLogin());
+        hyperLinkDocumentos.setOnAction(event -> abrirCarpetaDocumentos(event));
     }
 
     private void procesarLogin() {
@@ -127,5 +131,23 @@ public class LoginController {
         alert.setHeaderText(titulo);
         alert.setContentText(contenido);
         alert.showAndWait();
+    }
+
+    @FXML
+    void abrirCarpetaDocumentos(ActionEvent event) {
+        try {
+            // Pones el enlace directo a tu carpeta o archivo de Drive (asegúrate de que tenga permisos públicos de lectura)
+            URI linkDrive = new URI("https://drive.google.com/drive/folders/1pQeKMzK5mAOvM_dcOr3SHqQSD-CvjBpz?usp=sharing");
+
+            // Validamos que el sistema soporte abrir el navegador
+            if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
+                Desktop.getDesktop().browse(linkDrive); // Esto abre el navegador web
+            } else {
+                System.out.println("El sistema no soporta abrir enlaces web.");
+            }
+        } catch (Exception ex) {
+            System.out.println("Error al intentar abrir el enlace de Drive.");
+            ex.printStackTrace();
+        }
     }
 }

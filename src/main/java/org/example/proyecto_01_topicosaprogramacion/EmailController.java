@@ -2,6 +2,8 @@ package org.example.proyecto_01_topicosaprogramacion;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.StackPane;
 
 import javafx.collections.FXCollections;
@@ -53,6 +55,35 @@ public class EmailController {
     @FXML
     public void initialize() {
         listAdjuntos.setItems(archivosObservable);
+
+        listAdjuntos.setCellFactory(listView -> new ListCell<File>() {
+            private ImageView imageView = new ImageView();
+
+            @Override
+            protected void updateItem(File file, boolean empty) {
+                super.updateItem(file, empty);
+
+                if (empty || file == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else {
+                    // 1. Mostrar solo el nombre, no la ruta completa
+                    setText(file.getName());
+
+                    // 2. Asignar el ícono correspondiente
+                    Image icono = obtenerIconoParaArchivo(file);
+                    if (icono != null) {
+                        imageView.setImage(icono);
+                        imageView.setFitWidth(24); // Ancho del ícono
+                        imageView.setFitHeight(24); // Alto del ícono
+                        setGraphic(imageView);
+                    } else {
+                        setGraphic(null); // Si no hay ícono, no muestra imagen
+                    }
+                }
+            }
+        });
+
         botonEnviar.setOnAction(event -> enviarCorreo());
 
         configurarDragAndDrop();
@@ -76,6 +107,31 @@ public class EmailController {
 
             stage.sizeToScene();
         });
+    }
+
+    private Image obtenerIconoParaArchivo(File archivo) {
+        String nombre = archivo.getName().toLowerCase();
+        String rutaImagen = "/org/example/proyecto_01_topicosaprogramacion/icons/default.png";
+
+        if (nombre.endsWith(".pdf")) {
+            rutaImagen = "/org/example/proyecto_01_topicosaprogramacion/icons/pdf.png";
+        } else if (nombre.endsWith(".doc") || nombre.endsWith(".docx")) {
+            rutaImagen = "/org/example/proyecto_01_topicosaprogramacion/icons/word.png";
+        } else if (nombre.endsWith(".jpg") || nombre.endsWith(".jpeg") || nombre.endsWith(".png")) {
+            rutaImagen = "/org/example/proyecto_01_topicosaprogramacion/icons/imagen.png";
+        } else if (nombre.endsWith(".java") || nombre.endsWith(".jav")) {
+            rutaImagen = "/org/example/proyecto_01_topicosaprogramacion/icons/java.png";
+        } else if (nombre.endsWith(".zip") || nombre.endsWith(".rar")) {
+            rutaImagen = "/org/example/proyecto_01_topicosaprogramacion/icons/zip.png";
+        } else if (nombre.endsWith(".mp4") || nombre.endsWith(".flv")) {
+            rutaImagen = "/org/example/proyecto_01_topicosaprogramacion/icons/mp4.png";
+        }
+
+        try {
+            return new Image(getClass().getResourceAsStream(rutaImagen));
+        } catch (Exception e) {
+            return null;
+        }
     }
 
     // 5. Lógica de Drag & Drop (Arrastrar y Soltar)

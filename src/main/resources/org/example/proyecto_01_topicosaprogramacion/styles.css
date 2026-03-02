@@ -2,7 +2,7 @@
 
 /* 1. Fondo del login */
 .root-pane {
-    -fx-background-color: #E6F0FA; /* El rojo característico */
+    -fx-background-color: #E6F0FA;
 }
 
 /* 2. La tarjeta blanca (el VBox) */
