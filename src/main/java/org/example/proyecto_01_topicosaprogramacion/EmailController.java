@@ -67,18 +67,16 @@ public class EmailController {
                     setText(null);
                     setGraphic(null);
                 } else {
-                    // 1. Mostrar solo el nombre, no la ruta completa
                     setText(file.getName());
 
-                    // 2. Asignar el ícono correspondiente
                     Image icono = obtenerIconoParaArchivo(file);
                     if (icono != null) {
                         imageView.setImage(icono);
-                        imageView.setFitWidth(24); // Ancho del ícono
-                        imageView.setFitHeight(24); // Alto del ícono
+                        imageView.setFitWidth(24);
+                        imageView.setFitHeight(24);
                         setGraphic(imageView);
                     } else {
-                        setGraphic(null); // Si no hay ícono, no muestra imagen
+                        setGraphic(null);
                     }
                 }
             }

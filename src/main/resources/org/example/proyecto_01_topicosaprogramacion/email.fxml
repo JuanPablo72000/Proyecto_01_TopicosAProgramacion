@@ -4,8 +4,10 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<StackPane styleClass="email-background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyecto_01_topicosaprogramacion.EmailController">
+<HBox alignment="CENTER" styleClass="email-background" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.proyecto_01_topicosaprogramacion.EmailController">
    <children>
+      <VBox maxHeight="700.0" prefWidth="550.0" style="-fx-background-color: white;" HBox.hgrow="NEVER" />
+      <Pane prefWidth="1.0" />
       <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="600.0" style="-fx-background-color: white;" stylesheets="@styles.css">
          <children>
             <VBox prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -72,4 +74,4 @@
          </children>
       </AnchorPane>
    </children>
-</StackPane>
+</HBox>
